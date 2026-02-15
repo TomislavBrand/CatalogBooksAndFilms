@@ -2,15 +2,20 @@
 
 <h2>Books</h2>
 
-<a asp-action="Create" class="btn btn-primary mb-3">
-    Add Book
-</a>
+@if (User.IsInRole("Admin"))
+{
+    <a asp-action="Create" class="btn btn-primary mb-3">
+        Add Book
+    </a>
+}
 
 <table class="table">
     <tr>
         <th>Title</th>
         <th>Year</th>
+        <th>Genre</th>
         <th>Authors</th>
+        <th>Actions</th>
     </tr>
 
     @foreach (var book in Model)
@@ -18,9 +23,22 @@
         <tr>
             <td>@book.Title</td>
             <td>@book.Year</td>
+            <td>@book.Genre?.Name</td>
+            <td>@string.Join(", ", book.BookAuthors.Select(a => a.Author.Name))</td>
             <td>
-                @string.Join(", ",
-                         book.BookAuthors.Select(a => a.Author.Name))
+                <a asp-action="Details" asp-route-id="@book.Id" class="btn btn-sm btn-info">
+                    Details
+                </a>
+
+                @if (User.IsInRole("Admin"))
+                {
+                    <a asp-action="Edit" asp-route-id="@book.Id" class="btn btn-sm btn-warning">
+                        Edit
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@book.Id" class="btn btn-sm btn-danger">
+                        Delete
+                    </a>
+                }
             </td>
         </tr>
     }

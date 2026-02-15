@@ -1,0 +1,11 @@
+﻿@model CatalogBooksAndFilms.Entities.Book
+
+<h2>Book Details</h2>
+
+<p><b>Title:</b> @Model.Title</p>
+<p><b>Description:</b> @Model.Description</p>
+<p><b>Year:</b> @Model.Year</p>
+<p><b>Genre:</b> @Model.Genre?.Name</p>
+<p><b>Authors:</b> @string.Join(", ", Model.BookAuthors.Select(a => a.Author.Name))</p>
+
+<a asp-action="Index" class="btn btn-secondary">Back</a>

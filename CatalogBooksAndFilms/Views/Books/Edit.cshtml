@@ -1,0 +1,54 @@
+﻿@model CatalogBooksAndFilms.ViewModels.BookEditViewModel
+@{
+    var authors = ViewBag.Authors as List<CatalogBooksAndFilms.Entities.Author>;
+    var genres = ViewBag.Genres as List<CatalogBooksAndFilms.Entities.Genre>;
+}
+
+<h2>Edit Book</h2>
+
+<form asp-action="Edit">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="mb-3">
+        <label>Title</label>
+        <input asp-for="Title" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Description</label>
+        <input asp-for="Description" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Year</label>
+        <input asp-for="Year" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Genre</label>
+        <select asp-for="GenreId" class="form-control">
+            @foreach (var g in genres)
+            {
+                <option value="@g.Id">@g.Name</option>
+            }
+        </select>
+    </div>
+
+    <h4>Authors</h4>
+    @foreach (var a in authors)
+    {
+        var isChecked = Model.SelectedAuthorIds.Contains(a.Id);
+
+        <div class="form-check">
+            <input class="form-check-input"
+                   type="checkbox"
+                   name="SelectedAuthorIds"
+                   value="@a.Id"
+                   checked="@isChecked" />
+            <label class="form-check-label">@a.Name</label>
+        </div>
+    }
+
+    <button type="submit" class="btn btn-primary mt-3">Save</button>
+    <a asp-action="Index" class="btn btn-secondary mt-3">Cancel</a>
+</form>
