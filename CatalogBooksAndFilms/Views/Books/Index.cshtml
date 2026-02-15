@@ -1,0 +1,27 @@
+﻿@model List<CatalogBooksAndFilms.Entities.Book>
+
+<h2>Books</h2>
+
+<a asp-action="Create" class="btn btn-primary mb-3">
+    Add Book
+</a>
+
+<table class="table">
+    <tr>
+        <th>Title</th>
+        <th>Year</th>
+        <th>Authors</th>
+    </tr>
+
+    @foreach (var book in Model)
+    {
+        <tr>
+            <td>@book.Title</td>
+            <td>@book.Year</td>
+            <td>
+                @string.Join(", ",
+                         book.BookAuthors.Select(a => a.Author.Name))
+            </td>
+        </tr>
+    }
+</table>
